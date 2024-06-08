@@ -26,7 +26,6 @@ sudo apt-get install \
   libffi-dev \
   llvm-dev \
   pkg-config \
-  python3-pip \
   zlib1g-dev
 
 echo "Loading the Vivado tooling into the docker repo - this takes a while."

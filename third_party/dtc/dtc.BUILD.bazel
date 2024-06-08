@@ -46,6 +46,9 @@ make(
     # "Modern" make rule authors hide the make command lines. `V=1` turns this
     # off, so you can actually see what the error is if it happens.
     "V=1 " +
+    # We don't use python, and somewhat predictably things break when we leave
+    # python in.
+    "NO_PYTHON=1 " +
     # For this rule to work, you must execute an equivalent of `make install`.
     # This in turn means that not all make files would work out of the box.
     # Make install will copy to `$INSTALLDIR`, which will be named after the
