@@ -14,6 +14,31 @@ load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_depende
 
 rules_foreign_cc_dependencies()
 
+rules_hdl_git_hash = "ebaf7482c035208f485f463c62fd3c2f969a9b5c"
+
+rules_hdl_git_sha256 = "3743f1ed6739abaaa68e1e907adffb13c285fd70390d950c3989729439d952c5"
+
+maybe(
+    git_repository,
+    name = "rules_hdl",
+    commit = "6689294f2d4f45de02a527d947b4703b4c008b53",
+    remote = "https://github.com/hdl/bazel_rules_hdl",
+    shallow_since = "1676530055 -0800",
+)
+
+load("@rules_hdl//toolchains/cpython:cpython_toolchain.bzl", "register_cpython_repository")
+
+register_cpython_repository()
+
+register_toolchains("@rules_hdl//toolchains/cpython:cpython_toolchain")
+
+maybe(
+    http_archive,
+    name = "rules_python",
+    sha256 = "b6d46438523a3ec0f3cead544190ee13223a52f6a6765a29eae7b7cc24cc83a0",
+    url = "https://github.com/bazelbuild/rules_python/releases/download/0.1.0/rules_python-0.1.0.tar.gz",
+)
+
 maybe(
     http_archive,
     name = "rules_pkg",
