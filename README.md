@@ -1,4 +1,4 @@
-# rules_bazel_dtc: devicetree compiler build rules. [![Build status](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)
+# bazel_rules_dtc: devicetree compiler build rules. [![Build status](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)
 
 # Contributor guide
 
