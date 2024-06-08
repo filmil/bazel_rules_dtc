@@ -1,0 +1,17 @@
+/dts-v1/;
+
+/ {
+    node1 {
+        a-string-property = "A string";
+        a-string-list-property = "first string", "second string";
+        // hex is implied in byte arrays. no '0x' prefix is required
+        a-byte-data-property = [01 23 34 56];
+        child-node1 {
+            first-child-property;
+            second-child-property = <1>;
+            a-string-property = "Hello, world";
+        };
+        child-node2 {
+        };
+    };
+};

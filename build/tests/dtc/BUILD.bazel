@@ -1,0 +1,28 @@
+load("//build/dtc:rules.bzl", "device_tree_blob")
+
+# An example of how to build a device tree blob with a single top level
+# file and one include file.  The output will be `test_blob.dtb`.
+device_tree_blob(
+    name = "test_blob",
+    srcs = [
+        "file.dts",
+        "include.dtsi",
+    ],
+    top_level = "file.dts",
+    visibility = ["//visibility:public"],
+)
+
+# And here is how to build a device tree with includes specified separately.
+filegroup(
+    name = "test_group",
+    srcs = ["include.dtsi"],
+)
+
+device_tree_blob(
+    name = "test_blob_with_filegroup",
+    srcs = [
+        "file.dts",
+        ":test_group",
+    ],
+    top_level = "file.dts",
+)
