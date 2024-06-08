@@ -1,7 +1,5 @@
 # rules_bazel_dtc: devicetree compiler build rules. [![Build status](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)](https://github.com/filmil/bazel_rules_dtc/workflows/Build/badge.svg)
 
-An environment for RISC-V 64-bit experimentation.  A Google-internal project.
-
 # Contributor guide
 
 ## Prerequisites
