@@ -1,0 +1,17 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,sensors";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    i2c {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        sensor@48 {
+            compatible = "acme,temp";
+            reg = <0x48>;
+        };
+    };
+};

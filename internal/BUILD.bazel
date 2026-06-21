@@ -1,0 +1,98 @@
+load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@stardoc//stardoc:stardoc.bzl", "stardoc")
+
+package(default_visibility = ["//visibility:public"])
+
+# ---------------------------------------------------------------------------
+# bzl_library targets (used by stardoc and the root :defs library).
+# ---------------------------------------------------------------------------
+
+bzl_library(
+    name = "providers",
+    srcs = ["providers.bzl"],
+)
+
+bzl_library(
+    name = "compile",
+    srcs = ["compile.bzl"],
+    deps = [
+        ":providers",
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "dtc_compile",
+    srcs = ["dtc_compile.bzl"],
+    deps = [":compile"],
+)
+
+bzl_library(
+    name = "dtbo_compile",
+    srcs = ["dtbo_compile.bzl"],
+    deps = [":compile"],
+)
+
+bzl_library(
+    name = "dts_library",
+    srcs = ["dts_library.bzl"],
+    deps = [
+        ":providers",
+        "@bazel_skylib//lib:paths",
+    ],
+)
+
+bzl_library(
+    name = "fdt_overlay",
+    srcs = ["fdt_overlay.bzl"],
+)
+
+bzl_library(
+    name = "dtb_decompile",
+    srcs = ["dtb_decompile.bzl"],
+)
+
+bzl_library(
+    name = "dts_test_tpl",
+    srcs = ["dts_test_tpl.bzl"],
+)
+
+bzl_library(
+    name = "dts_test",
+    srcs = ["dts_test.bzl"],
+    deps = [":dts_test_tpl"],
+)
+
+# ---------------------------------------------------------------------------
+# Generated documentation.
+# ---------------------------------------------------------------------------
+
+_DOCS = {
+    "providers": ":providers",
+    "compile": ":compile",
+    "dts_library": ":dts_library",
+    "dtc_compile": ":dtc_compile",
+    "dtbo_compile": ":dtbo_compile",
+    "fdt_overlay": ":fdt_overlay",
+    "dtb_decompile": ":dtb_decompile",
+    "dts_test": ":dts_test",
+}
+
+[
+    stardoc(
+        name = "gen_" + name,
+        out = "gen." + name + ".md",
+        input = name + ".bzl",
+        deps = [lib],
+    )
+    for name, lib in _DOCS.items()
+]
+
+write_source_files(
+    name = "update",
+    files = {
+        name + ".md": ":gen_" + name
+        for name in _DOCS.keys()
+    },
+)

@@ -1,0 +1,17 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,symbols";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        i2c0: i2c@40000 {
+            compatible = "acme,i2c";
+            reg = <0x40000 0x100>;
+        };
+    };
+};

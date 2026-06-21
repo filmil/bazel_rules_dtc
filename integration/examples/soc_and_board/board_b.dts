@@ -1,0 +1,15 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,board-b";
+    model = "Board B";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    leds {
+        compatible = "gpio-leds";
+        status = "okay";
+    };
+};
+
+/include/ "soc.dtsi"

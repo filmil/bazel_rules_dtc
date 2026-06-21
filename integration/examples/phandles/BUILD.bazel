@@ -1,0 +1,18 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# Demonstrates phandle references (`&intc`) and a `reserved-memory` region.
+# The explicit `phandle = <1>` makes the resolved reference deterministic.
+dtc_compile(
+    name = "soc",
+    src = "soc.dts",
+)
+
+dts_test(
+    name = "soc_test",
+    dtb = ":soc",
+    properties = {
+        "/device@20000|compatible": "acme,device",
+        "/device@20000|interrupt-parent": "1",
+        "/device@20000|interrupts": "5",
+    },
+)

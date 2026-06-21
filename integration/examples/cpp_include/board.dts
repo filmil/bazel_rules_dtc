@@ -1,0 +1,20 @@
+/dts-v1/;
+
+#include "regs.h"
+
+/ {
+    compatible = "acme,cpp-include";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        serial@10000000 {
+            compatible = "acme,uart";
+            reg = <UART_BASE UART_SIZE>;
+            interrupts = <UART_IRQ>;
+        };
+    };
+};

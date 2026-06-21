@@ -1,0 +1,21 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# Extra `dtc` flags are passed verbatim through `copts`. Here we disable a
+# specific checker via `-W no-<check>`.
+dtc_compile(
+    name = "spi",
+    src = "spi.dts",
+    copts = [
+        "-W",
+        "no-spi_bus_reg",
+    ],
+)
+
+dts_test(
+    name = "spi_test",
+    dtb = ":spi",
+    properties = {
+        "/spi@50000|compatible": "acme,spi",
+        "/spi@50000/flash@0|compatible": "jedec,spi-nor",
+    },
+)

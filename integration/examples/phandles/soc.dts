@@ -1,0 +1,34 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,phandles";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    intc: interrupt-controller@10000 {
+        compatible = "acme,intc";
+        reg = <0x10000 0x1000>;
+        interrupt-controller;
+        #interrupt-cells = <1>;
+        phandle = <1>;
+    };
+
+    device@20000 {
+        compatible = "acme,device";
+        reg = <0x20000 0x100>;
+        interrupt-parent = <&intc>;
+        interrupts = <5>;
+    };
+
+    reserved-memory {
+        #address-cells = <1>;
+        #size-cells = <1>;
+        ranges;
+
+        framebuffer@30000000 {
+            compatible = "acme,framebuffer";
+            reg = <0x30000000 0x100000>;
+            no-map;
+        };
+    };
+};

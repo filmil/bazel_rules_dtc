@@ -1,0 +1,35 @@
+load(
+    "@rules_dtc//:defs.bzl",
+    "dtbo_compile",
+    "dtc_compile",
+    "dts_test",
+    "fdt_overlay",
+)
+
+# A base blob (compiled with __symbols__) plus a device tree overlay applied to
+# it with fdtoverlay.
+dtc_compile(
+    name = "base",
+    src = "base.dts",
+    symbols = True,
+)
+
+dtbo_compile(
+    name = "enable_uart",
+    src = "enable_uart.dts",
+)
+
+fdt_overlay(
+    name = "merged",
+    base = ":base",
+    overlays = [":enable_uart"],
+)
+
+dts_test(
+    name = "merged_test",
+    dtb = ":merged",
+    dump = True,
+    properties = {
+        "/soc/serial@10000000|status": "okay",
+    },
+)

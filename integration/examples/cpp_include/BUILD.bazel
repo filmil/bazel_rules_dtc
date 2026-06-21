@@ -1,0 +1,19 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# `#include` of a C header is resolved by the preprocessor. Header files made
+# available to the preprocessor are listed in `cpp_includes`.
+dtc_compile(
+    name = "board",
+    src = "board.dts",
+    cpp_includes = ["regs.h"],
+    preprocess = True,
+)
+
+dts_test(
+    name = "board_test",
+    dtb = ":board",
+    properties = {
+        "/soc/serial@10000000|reg": "268435456 4096",
+        "/soc/serial@10000000|interrupts": "5",
+    },
+)

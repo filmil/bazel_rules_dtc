@@ -1,0 +1,30 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_library", "dts_test")
+
+# A chain of includes across separate dts_library targets. The include search
+# paths propagate transitively: `top.dts` includes `soc.dtsi`, which in turn
+# includes `clocks.dtsi` from a different directory.
+dts_library(
+    name = "clocks",
+    srcs = ["clocks/clocks.dtsi"],
+)
+
+dts_library(
+    name = "soc",
+    srcs = ["soc/soc.dtsi"],
+    deps = [":clocks"],
+)
+
+dtc_compile(
+    name = "top",
+    src = "top.dts",
+    deps = [":soc"],
+)
+
+dts_test(
+    name = "top_test",
+    dtb = ":top",
+    properties = {
+        "/soc/timer@20000|compatible": "acme,timer",
+        "/clocks/osc24m|clock-frequency": "24000000",
+    },
+)

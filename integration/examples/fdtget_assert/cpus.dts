@@ -1,0 +1,30 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,multicore";
+    model = "Acme Quad";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        cpu@0 {
+            device_type = "cpu";
+            compatible = "acme,cpu";
+            reg = <0>;
+        };
+
+        cpu@1 {
+            device_type = "cpu";
+            compatible = "acme,cpu";
+            reg = <1>;
+        };
+    };
+
+    memory@80000000 {
+        device_type = "memory";
+        reg = <0x80000000 0x20000000>;
+    };
+};

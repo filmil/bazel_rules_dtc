@@ -1,0 +1,9 @@
+/ {
+    clocks {
+        osc24m: osc24m {
+            compatible = "fixed-clock";
+            #clock-cells = <0>;
+            clock-frequency = <24000000>;
+        };
+    };
+};

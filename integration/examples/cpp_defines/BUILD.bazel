@@ -1,0 +1,22 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# `preprocess = True` runs the C preprocessor (from the cc toolchain) before
+# dtc, so `#define`/macro values supplied via `defines` are substituted.
+dtc_compile(
+    name = "board",
+    src = "board.dts",
+    defines = [
+        "CLOCK_FREQ=24000000",
+        "BAUD_RATE=115200",
+    ],
+    preprocess = True,
+)
+
+dts_test(
+    name = "board_test",
+    dtb = ":board",
+    properties = {
+        "/|clock-frequency": "24000000",
+        "/uart|current-speed": "115200",
+    },
+)

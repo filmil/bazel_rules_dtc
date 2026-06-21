@@ -1,0 +1,9 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,gpio-board";
+    #address-cells = <1>;
+    #size-cells = <1>;
+};
+
+/include/ "gpio.dtsi"

@@ -1,0 +1,38 @@
+load("@bazel_lib//lib:write_source_files.bzl", "write_source_files")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@buildifier_prebuilt//:rules.bzl", "buildifier")
+load("@stardoc//stardoc:stardoc.bzl", "stardoc")
+
+exports_files(["defs.bzl"])
+
+buildifier(name = "buildifier")
+
+bzl_library(
+    name = "defs",
+    srcs = ["defs.bzl"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal:dtb_decompile",
+        "//internal:dtbo_compile",
+        "//internal:dtc_compile",
+        "//internal:dts_library",
+        "//internal:dts_test",
+        "//internal:fdt_overlay",
+        "//internal:providers",
+    ],
+)
+
+stardoc(
+    name = "gen_defs",
+    out = "gen.defs.md",
+    input = "defs.bzl",
+    deps = [":defs"],
+)
+
+write_source_files(
+    name = "update",
+    additional_update_targets = ["//internal:update"],
+    files = {
+        "defs.md": ":gen_defs",
+    },
+)

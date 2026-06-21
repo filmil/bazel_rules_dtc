@@ -1,0 +1,18 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# Uses `dump = True` so the test also runs `fdtdump` on the blob as a smoke
+# check that the output is a well-formed flattened device tree.
+dtc_compile(
+    name = "sensors",
+    src = "sensors.dts",
+)
+
+dts_test(
+    name = "sensors_test",
+    dtb = ":sensors",
+    dump = True,
+    properties = {
+        "/|compatible": "acme,sensors",
+        "/i2c/sensor@48|compatible": "acme,temp",
+    },
+)

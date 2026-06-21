@@ -1,0 +1,14 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,cpp-defines";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    clock-frequency = <CLOCK_FREQ>;
+
+    uart {
+        compatible = "acme,uart";
+        current-speed = <BAUD_RATE>;
+    };
+};

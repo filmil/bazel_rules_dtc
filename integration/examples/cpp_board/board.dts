@@ -1,0 +1,22 @@
+/dts-v1/;
+
+#include "soc-defs.h"
+
+/ {
+    compatible = "acme,cpp-board";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        uart@10000000 {
+            compatible = "acme,uart";
+            reg = <SOC_UART_BASE 0x100>;
+            interrupts = <SOC_UART_IRQ>;
+        };
+    };
+};
+
+/include/ "pinctrl.dtsi"

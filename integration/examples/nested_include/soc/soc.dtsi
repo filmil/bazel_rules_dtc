@@ -1,0 +1,14 @@
+/include/ "clocks.dtsi"
+
+/ {
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        timer@20000 {
+            compatible = "acme,timer";
+            reg = <0x20000 0x100>;
+            clocks = <&osc24m>;
+        };
+    };
+};

@@ -1,0 +1,23 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_library", "dts_test")
+
+# Native dtc `/include/`: the included file is provided by a dts_library, whose
+# directory is automatically added to the dtc include search path.
+dts_library(
+    name = "gpio",
+    srcs = ["gpio.dtsi"],
+)
+
+dtc_compile(
+    name = "board",
+    src = "board.dts",
+    deps = [":gpio"],
+)
+
+dts_test(
+    name = "board_test",
+    dtb = ":board",
+    properties = {
+        "/|compatible": "acme,gpio-board",
+        "/soc/gpio@10001000|compatible": "acme,gpio",
+    },
+)

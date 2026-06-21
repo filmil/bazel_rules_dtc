@@ -1,0 +1,17 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# `symbols = True` emits a `__symbols__` node (dtc -@) that maps labels to node
+# paths. This is what overlays resolve `&label` references against.
+dtc_compile(
+    name = "base",
+    src = "base.dts",
+    symbols = True,
+)
+
+dts_test(
+    name = "base_test",
+    dtb = ":base",
+    properties = {
+        "/__symbols__|i2c0": "/soc/i2c@40000",
+    },
+)

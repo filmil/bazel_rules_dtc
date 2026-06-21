@@ -1,0 +1,2 @@
+# Configuration for the publish-to-bcr tooling. Intentionally minimal; see
+# https://github.com/bazel-contrib/publish-to-bcr for available options.

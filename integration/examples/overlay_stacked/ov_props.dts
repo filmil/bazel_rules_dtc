@@ -1,0 +1,7 @@
+/dts-v1/;
+/plugin/;
+
+&uart0 {
+    clock-frequency = <48000000>;
+    current-speed = <115200>;
+};

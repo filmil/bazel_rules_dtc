@@ -1,0 +1,21 @@
+load("@rules_dtc//:defs.bzl", "dtb_decompile", "dtc_compile", "dts_test")
+
+# Compile to a blob, then decompile it back to source (a round trip).
+dtc_compile(
+    name = "board",
+    src = "board.dts",
+)
+
+dtb_decompile(
+    name = "board_roundtrip",
+    src = ":board",
+)
+
+dts_test(
+    name = "board_test",
+    dtb = ":board",
+    properties = {
+        "/leds/led0|label": "heartbeat",
+        "/leds/led0|default-state": "on",
+    },
+)
