@@ -14,3 +14,8 @@ bazel_dep(name = "bazel_lib", version = "3.3.1")
 # Documentation generation and linting.
 bazel_dep(name = "stardoc", version = "0.8.1", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1.2", dev_dependency = True)
+
+# Pulled in transitively by stardoc. Pin a recent version so the build can use a
+# prebuilt protoc instead of compiling it from source (see .bazelrc); the older
+# transitively-selected version compiles protoc, which takes minutes.
+bazel_dep(name = "protobuf", version = "35.1", dev_dependency = True)
