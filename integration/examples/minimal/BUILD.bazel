@@ -1,0 +1,18 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# The smallest useful example: a single source compiled to a blob.
+dtc_compile(
+    name = "minimal",
+    src = "minimal.dts",
+)
+
+dts_test(
+    name = "minimal_test",
+    dtb = ":minimal",
+    dump = True,
+    properties = {
+        "/|compatible": "acme,minimal",
+        "/|model": "Acme Minimal Board",
+        "/chosen|bootargs": "console=ttyS0,115200",
+    },
+)

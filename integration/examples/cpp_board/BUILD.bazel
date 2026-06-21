@@ -1,0 +1,26 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_library", "dts_test")
+
+# A kernel-style board that uses BOTH mechanisms at once: the C preprocessor
+# (`#include "soc-defs.h"` + macros) and native dtc `/include/` of a dtsi that
+# comes from a dts_library.
+dts_library(
+    name = "pinctrl",
+    srcs = ["pinctrl.dtsi"],
+)
+
+dtc_compile(
+    name = "board",
+    src = "board.dts",
+    cpp_includes = ["soc-defs.h"],
+    preprocess = True,
+    deps = [":pinctrl"],
+)
+
+dts_test(
+    name = "board_test",
+    dtb = ":board",
+    properties = {
+        "/soc/uart@10000000|interrupts": "7",
+        "/soc/pinctrl@90000|compatible": "acme,pinctrl",
+    },
+)

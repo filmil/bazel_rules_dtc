@@ -1,0 +1,10 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,board-a";
+    model = "Board A";
+    #address-cells = <1>;
+    #size-cells = <1>;
+};
+
+/include/ "soc.dtsi"

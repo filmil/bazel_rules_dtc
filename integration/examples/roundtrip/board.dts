@@ -1,0 +1,16 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,roundtrip";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    leds {
+        compatible = "gpio-leds";
+
+        led0 {
+            label = "heartbeat";
+            default-state = "on";
+        };
+    };
+};

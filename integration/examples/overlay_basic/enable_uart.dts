@@ -1,0 +1,7 @@
+/dts-v1/;
+/plugin/;
+
+&uart0 {
+    status = "okay";
+    clock-frequency = <24000000>;
+};

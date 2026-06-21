@@ -1,0 +1,9 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,nested";
+    #address-cells = <1>;
+    #size-cells = <1>;
+};
+
+/include/ "soc.dtsi"

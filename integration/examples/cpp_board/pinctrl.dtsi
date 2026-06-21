@@ -1,0 +1,11 @@
+/ {
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        pinctrl@90000 {
+            compatible = "acme,pinctrl";
+            reg = <0x90000 0x100>;
+        };
+    };
+};

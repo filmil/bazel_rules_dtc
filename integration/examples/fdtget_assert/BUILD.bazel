@@ -1,0 +1,20 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_test")
+
+# A richer tree with several properties asserted via fdtget, including
+# multi-cell integer values (printed by fdtget as space-separated decimals).
+dtc_compile(
+    name = "cpus",
+    src = "cpus.dts",
+)
+
+dts_test(
+    name = "cpus_test",
+    dtb = ":cpus",
+    properties = {
+        "/|model": "Acme Quad",
+        "/cpus/cpu@0|device_type": "cpu",
+        "/cpus/cpu@1|reg": "1",
+        # fdtget prints cells as signed 32-bit decimals, so 0x80000000 wraps.
+        "/memory@80000000|reg": "-2147483648 536870912",
+    },
+)

@@ -1,0 +1,19 @@
+/dts-v1/;
+
+/ {
+    compatible = "acme,warnings";
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    spi@50000 {
+        compatible = "acme,spi";
+        reg = <0x50000 0x100>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        flash@0 {
+            compatible = "jedec,spi-nor";
+            reg = <0>;
+        };
+    };
+};

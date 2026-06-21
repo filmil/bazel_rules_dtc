@@ -1,0 +1,37 @@
+load("@rules_dtc//:defs.bzl", "dtc_compile", "dts_library", "dts_test")
+
+# A single shared SoC description reused by two different board blobs.
+dts_library(
+    name = "soc",
+    srcs = ["soc.dtsi"],
+)
+
+dtc_compile(
+    name = "board_a",
+    src = "board_a.dts",
+    deps = [":soc"],
+)
+
+dtc_compile(
+    name = "board_b",
+    src = "board_b.dts",
+    deps = [":soc"],
+)
+
+dts_test(
+    name = "board_a_test",
+    dtb = ":board_a",
+    properties = {
+        "/|model": "Board A",
+        "/soc/serial@10000000|compatible": "acme,uart",
+    },
+)
+
+dts_test(
+    name = "board_b_test",
+    dtb = ":board_b",
+    properties = {
+        "/|model": "Board B",
+        "/soc/serial@10000000|compatible": "acme,uart",
+    },
+)

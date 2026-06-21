@@ -1,0 +1,15 @@
+module(
+    name = "integration",
+    version = "0.0.0",
+    bazel_compatibility = [">=8.0.0"],
+)
+
+bazel_dep(name = "rules_dtc", version = "0.0.0")
+local_path_override(
+    module_name = "rules_dtc",
+    path = "../",
+)
+
+# Also depended upon directly so that `@dtc//:dtc` can be built/verified from
+# this test module (see ../.bcr/presubmit.yml verify_targets).
+bazel_dep(name = "dtc", version = "1.7.2.bcr.1")
