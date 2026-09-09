@@ -1,5 +1,8 @@
-common --registry=https://bcr.bazel.build
+# The custom registry first: Bazel takes the first registry that has a
+# module, so this order lets filmil/bazel-registry override a module the
+# Bazel Central Registry also has. The other way round it could only add.
 common --registry=https://raw.githubusercontent.com/filmil/bazel-registry/main
+common --registry=https://bcr.bazel.build
 
 # Allows temporary user settings to be placed here. From
 # https://bazel.build/configure/best-practices#bazelrc-file

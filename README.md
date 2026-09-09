@@ -10,7 +10,7 @@
 `bazel_rules_dtc` provides Bazel rules for the [Device Tree Compiler][dtc]
 (`dtc`). It lets you compile device tree sources (`.dts`) into flattened device
 tree blobs (`.dtb`), build and apply device tree overlays (`.dtbo`), decompile
-blobs back into sources, and assert properties of the result — all as hermetic
+blobs back into sources, and assert properties of the result, all as hermetic
 Bazel actions.
 
 The rules drive the `dtc`, `fdtoverlay`, `fdtget` and `fdtdump` binaries
@@ -146,7 +146,7 @@ dts_test(
 ## Examples
 
 The `//integration` directory is a self-contained Bazel module with 15 worked
-examples, each exercising one or more rules — from a minimal compile to nested
+examples, each exercising one or more rules, from a minimal compile to nested
 includes, shared SoC descriptions, overlays (single and stacked), preprocessor
 usage, phandles and `reserved-memory`, and `fdtget`/`fdtdump` assertions. Build
 and test them with:
@@ -156,6 +156,39 @@ cd integration
 bazel build //...
 bazel test //...
 ```
+
+## Releasing and publishing
+
+`Tag and Release` in `.github/workflows/tag-and-release.yml` runs monthly and
+on `workflow_dispatch`.
+It releases only when a commit landed since the last tag, computes the
+version from the conventional-commit titles since that tag, and pushes it.
+The release itself goes through bazel-contrib's `release_ruleset.yaml`:
+it runs `bazel test //...` at the tag, has
+`.github/workflows/release_prep.sh` build `bazel_rules_dtc-<tag>.zip` and
+the release notes, and attests the archive's provenance.
+A release then lists the archive and `bazel_rules_dtc-<tag>.zip.intoto.jsonl`.
+
+The same run publishes the release to [my Bazel registry][reg] as a pull
+request, through `.github/workflows/publish.yml`, and then opens a pull
+request against the Bazel Central Registry through
+`.github/workflows/publish-bcr.yml`, with attested `MODULE.bazel` and
+`source.json`, which is what the BCR presubmit verifies with `slsa-verifier`.
+Only that publish attests: two attesting publishes would overwrite each
+other's attestation files on the release.
+
+To check a release the way the BCR does, with the archive downloaded from
+the release:
+
+```
+slsa-verifier verify-github-attestation \
+  --attestation-path bazel_rules_dtc-<tag>.zip.intoto.jsonl \
+  --source-uri github.com/filmil/bazel_rules_dtc \
+  --builder-id https://github.com/bazel-contrib/.github/.github/workflows/release_ruleset.yaml \
+  bazel_rules_dtc-<tag>.zip
+```
+
+[reg]: https://github.com/filmil/bazel-registry
 
 ## Contributing
 
